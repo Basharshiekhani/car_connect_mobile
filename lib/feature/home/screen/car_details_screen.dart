@@ -361,7 +361,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
                                           borderRadius: BorderRadius.circular(
                                               AppRadiusManager.r15),
                                           height: AppHeightManager.h6,
-                                          onTap: () {},
+                                          onTap: () {Navigator.of(context).pop();},
                                           alignment: Alignment.center,
                                           child: AppTextWidget(
                                             text: "cancel",
@@ -707,6 +707,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
 
 
                       Navigator.of(context).pushNamed(RouteNamedScreens.rentCar,arguments: CartArgs(
+                        image:  entity?.images,
                           carId: (entity!.car)));
                       return;
                     }

@@ -1,0 +1,732 @@
+{
+  "api_documentation": {
+    "authentication": {
+      "generateOTP": {
+        "method": "POST",
+        "endpoint": "/api/generateOTP",
+        "description": "Generate OTP for user authentication",
+        "request": {
+          "body": {
+            "phone": "string (required)"
+          }
+        },
+        "response": {
+          "success": true,
+          "message": "OTP sent successfully"
+        }
+      },
+      "verifyCode": {
+        "method": "POST",
+        "endpoint": "/api/verifyCode",
+        "description": "Verify OTP and login user",
+        "request": {
+          "body": {
+            "phone": "string (required)",
+            "code": "string (required)"
+          }
+        },
+        "response": {
+          "token": "string",
+          "user": {
+            "id": "integer",
+            "name": "string",
+            "phone": "string"
+          }
+        }
+      },
+      "loginUsingEmail": {
+        "method": "POST",
+        "endpoint": "/api/loginUsingEmail",
+        "description": "Login using email and password",
+        "request": {
+          "body": {
+            "email": "string (required)",
+            "password": "string (required)"
+          }
+        },
+        "response": {
+          "token": "string",
+          "user": {
+            "id": "integer",
+            "name": "string",
+            "email": "string"
+          }
+        }
+      },
+      "getUsers": {
+        "method": "GET",
+        "endpoint": "/api/getUsers",
+        "description": "Get all users",
+        "response": {
+          "users": [
+            {
+              "id": "integer",
+              "name": "string",
+              "email": "string",
+              "phone": "string"
+            }
+          ]
+        }
+      }
+    },
+    "cars": {
+      "addCar": {
+        "method": "POST",
+        "endpoint": "/api/addCar",
+        "description": "Add a new car",
+        "request": {
+          "body": {
+            "brand_id": "integer (required)",
+            "model_id": "integer (required)",
+            "year": "integer (required)",
+            "color_id": "integer (required)",
+            "gear_id": "integer (required)",
+            "price": "decimal (required)",
+            "description": "string",
+            "images": "array of files"
+          }
+        },
+        "response": {
+          "success": true,
+          "car": {
+            "id": "integer",
+            "brand": "string",
+            "model": "string",
+            "year": "integer",
+            "price": "decimal"
+          }
+        }
+      },
+      "getCars": {
+        "method": "GET",
+        "endpoint": "/api/getCars",
+        "description": "Get all cars",
+        "response": {
+          "cars": [
+            {
+              "id": "integer",
+              "brand": "string",
+              "model": "string",
+              "year": "integer",
+              "price": "decimal",
+              "images": ["string"]
+            }
+          ]
+        }
+      },
+      "getCarDetails": {
+        "method": "POST",
+        "endpoint": "/api/getCarDetails",
+        "description": "Get detailed information about a specific car",
+        "request": {
+          "body": {
+            "car_id": "integer (required)"
+          }
+        },
+        "response": {
+          "car": {
+            "id": "integer",
+            "brand": "string",
+            "model": "string",
+            "year": "integer",
+            "price": "decimal",
+            "description": "string",
+            "images": ["string"],
+            "specifications": {
+              "color": "string",
+              "gear": "string"
+            }
+          }
+        }
+      }
+    },
+    "orders": {
+      "addOrder": {
+        "method": "POST",
+        "endpoint": "/api/addOrder",
+        "description": "Create a new order",
+        "request": {
+          "body": {
+            "car_id": "integer (required)",
+            "start_date": "date (required)",
+            "end_date": "date (required)",
+            "total_price": "decimal (required)"
+          }
+        },
+        "response": {
+          "success": true,
+          "order": {
+            "id": "integer",
+            "car_id": "integer",
+            "status": "string",
+            "total_price": "decimal"
+          }
+        }
+      },
+      "getOrderByUserId": {
+        "method": "POST",
+        "endpoint": "/api/getOrderByUserId",
+        "description": "Get orders for a specific user",
+        "request": {
+          "body": {
+            "user_id": "integer (required)"
+          }
+        },
+        "response": {
+          "orders": [
+            {
+              "id": "integer",
+              "car": {
+                "id": "integer",
+                "brand": "string",
+                "model": "string"
+              },
+              "status": "string",
+              "total_price": "decimal",
+              "dates": {
+                "start": "date",
+                "end": "date"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "reservations": {
+      "addReservation": {
+        "method": "POST",
+        "endpoint": "/api/addReservation",
+        "description": "Create a new reservation",
+        "request": {
+          "body": {
+            "car_id": "integer (required)",
+            "start_date": "date (required)",
+            "end_date": "date (required)"
+          }
+        },
+        "response": {
+          "success": true,
+          "reservation": {
+            "id": "integer",
+            "car_id": "integer",
+            "status": "string",
+            "dates": {
+              "start": "date",
+              "end": "date"
+            }
+          }
+        }
+      },
+      "getUserReservations": {
+        "method": "GET",
+        "endpoint": "/api/user/{userId}/reservations",
+        "description": "Get all reservations for a specific user",
+        "response": {
+          "reservations": [
+            {
+              "id": "integer",
+              "car": {
+                "id": "integer",
+                "brand": "string",
+                "model": "string"
+              },
+              "status": "string",
+              "dates": {
+                "start": "date",
+                "end": "date"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "gear": {
+      "addGear": {
+        "method": "POST",
+        "endpoint": "/api/addGear",
+        "description": "Add a new gear type",
+        "request": {
+          "body": {
+            "name": "string (required)"
+          }
+        },
+        "response": {
+          "success": true,
+          "gear": {
+            "id": "integer",
+            "name": "string"
+          }
+        }
+      },
+      "getGears": {
+        "method": "GET",
+        "endpoint": "/api/getGears",
+        "description": "Get all gear types",
+        "response": {
+          "gears": [
+            {
+              "id": "integer",
+              "name": "string"
+            }
+          ]
+        }
+      }
+    },
+    "color": {
+      "addColor": {
+        "method": "POST",
+        "endpoint": "/api/addColor",
+        "description": "Add a new color",
+        "request": {
+          "body": {
+            "name": "string (required)"
+          }
+        },
+        "response": {
+          "success": true,
+          "color": {
+            "id": "integer",
+            "name": "string"
+          }
+        }
+      },
+      "getColors": {
+        "method": "GET",
+        "endpoint": "/api/getColors",
+        "description": "Get all colors",
+        "response": {
+          "colors": [
+            {
+              "id": "integer",
+              "name": "string"
+            }
+          ]
+        }
+      }
+    },
+    "model": {
+      "addModel": {
+        "method": "POST",
+        "endpoint": "/api/addModel",
+        "description": "Add a new car model",
+        "request": {
+          "body": {
+            "name": "string (required)",
+            "brand_id": "integer (required)"
+          }
+        },
+        "response": {
+          "success": true,
+          "model": {
+            "id": "integer",
+            "name": "string",
+            "brand_id": "integer"
+          }
+        }
+      },
+      "getModels": {
+        "method": "GET",
+        "endpoint": "/api/getModels",
+        "description": "Get all car models",
+        "response": {
+          "models": [
+            {
+              "id": "integer",
+              "name": "string",
+              "brand": {
+                "id": "integer",
+                "name": "string"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "brand": {
+      "addBrand": {
+        "method": "POST",
+        "endpoint": "/api/addBrand",
+        "description": "Add a new car brand",
+        "request": {
+          "body": {
+            "name": "string (required)"
+          }
+        },
+        "response": {
+          "success": true,
+          "brand": {
+            "id": "integer",
+            "name": "string"
+          }
+        }
+      },
+      "getBrands": {
+        "method": "GET",
+        "endpoint": "/api/getBrands",
+        "description": "Get all car brands",
+        "response": {
+          "brands": [
+            {
+              "id": "integer",
+              "name": "string"
+            }
+          ]
+        }
+      }
+    },
+    "business_user": {
+      "addBusinessUserProfileInfo": {
+        "method": "POST",
+        "endpoint": "/api/addBusinessUserProfileInfo",
+        "description": "Add business user profile information",
+        "request": {
+          "body": {
+            "company_name": "string (required)",
+            "address": "string (required)",
+            "phone": "string (required)",
+            "email": "string (required)",
+            "commercial_license": "file (required)"
+          }
+        },
+        "response": {
+          "success": true,
+          "business_user": {
+            "id": "integer",
+            "company_name": "string",
+            "address": "string",
+            "phone": "string",
+            "email": "string"
+          }
+        }
+      },
+      "getBusinessUser": {
+        "method": "POST",
+        "endpoint": "/api/getBusinessUser",
+        "description": "Get business user details",
+        "request": {
+          "body": {
+            "user_id": "integer (required)"
+          }
+        },
+        "response": {
+          "business_user": {
+            "id": "integer",
+            "company_name": "string",
+            "address": "string",
+            "phone": "string",
+            "email": "string",
+            "commercial_license": "string"
+          }
+        }
+      },
+      "getBusinessUsers": {
+        "method": "GET",
+        "endpoint": "/api/getBusinessUsers",
+        "description": "Get all business users",
+        "response": {
+          "business_users": [
+            {
+              "id": "integer",
+              "company_name": "string",
+              "address": "string",
+              "phone": "string",
+              "email": "string"
+            }
+          ]
+        }
+      },
+      "getCompanyUsers": {
+        "method": "GET",
+        "endpoint": "/api/getCompanyUsers",
+        "description": "Get all company users",
+        "response": {
+          "company_users": [
+            {
+              "id": "integer",
+              "company_name": "string",
+              "users": [
+                {
+                  "id": "integer",
+                  "name": "string",
+                  "email": "string",
+                  "phone": "string"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "user": {
+      "uploadUserIdImage": {
+        "method": "POST",
+        "endpoint": "/api/uploadUserIdImage",
+        "description": "Upload user ID image",
+        "request": {
+          "body": {
+            "user_id": "integer (required)",
+            "id_image": "file (required)"
+          }
+        },
+        "response": {
+          "success": true,
+          "message": "ID image uploaded successfully"
+        }
+      }
+    },
+    "account": {
+      "addBalance": {
+        "method": "POST",
+        "endpoint": "/api/addBalance",
+        "description": "Add balance to user account",
+        "request": {
+          "body": {
+            "user_id": "integer (required)",
+            "amount": "decimal (required)"
+          }
+        },
+        "response": {
+          "success": true,
+          "balance": "decimal"
+        }
+      },
+      "deductBalance": {
+        "method": "POST",
+        "endpoint": "/api/deductBalance",
+        "description": "Deduct balance from user account",
+        "request": {
+          "body": {
+            "user_id": "integer (required)",
+            "amount": "decimal (required)"
+          }
+        },
+        "response": {
+          "success": true,
+          "balance": "decimal"
+        }
+      },
+      "getAccount": {
+        "method": "POST",
+        "endpoint": "/api/getAccount",
+        "description": "Get user account details",
+        "request": {
+          "body": {
+            "user_id": "integer (required)"
+          }
+        },
+        "response": {
+          "account": {
+            "id": "integer",
+            "user_id": "integer",
+            "balance": "decimal",
+            "transactions": [
+              {
+                "id": "integer",
+                "type": "string",
+                "amount": "decimal",
+                "date": "datetime"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "rate": {
+      "rateCar": {
+        "method": "POST",
+        "endpoint": "/api/rateCar",
+        "description": "Rate a car",
+        "request": {
+          "body": {
+            "car_id": "integer (required)",
+            "user_id": "integer (required)",
+            "rating": "integer (required, 1-5)",
+            "comment": "string"
+          }
+        },
+        "response": {
+          "success": true,
+          "rating": {
+            "id": "integer",
+            "car_id": "integer",
+            "user_id": "integer",
+            "rating": "integer",
+            "comment": "string"
+          }
+        }
+      }
+    },
+    "comment": {
+      "addComment": {
+        "method": "POST",
+        "endpoint": "/api/addComment",
+        "description": "Add a comment to a car",
+        "request": {
+          "body": {
+            "car_id": "integer (required)",
+            "user_id": "integer (required)",
+            "comment": "string (required)"
+          }
+        },
+        "response": {
+          "success": true,
+          "comment": {
+            "id": "integer",
+            "car_id": "integer",
+            "user_id": "integer",
+            "comment": "string",
+            "created_at": "datetime"
+          }
+        }
+      }
+    },
+    "likes": {
+      "addLike": {
+        "method": "POST",
+        "endpoint": "/api/addLike",
+        "description": "Add a like to a car",
+        "request": {
+          "body": {
+            "car_id": "integer (required)",
+            "user_id": "integer (required)"
+          }
+        },
+        "response": {
+          "success": true,
+          "like": {
+            "id": "integer",
+            "car_id": "integer",
+            "user_id": "integer"
+          }
+        }
+      }
+    },
+    "favorites": {
+      "addFavorite": {
+        "method": "POST",
+        "endpoint": "/api/addFavorite",
+        "description": "Add a car to favorites",
+        "request": {
+          "body": {
+            "car_id": "integer (required)",
+            "user_id": "integer (required)"
+          }
+        },
+        "response": {
+          "success": true,
+          "favorite": {
+            "id": "integer",
+            "car_id": "integer",
+            "user_id": "integer"
+          }
+        }
+      },
+      "getUserFavorites": {
+        "method": "POST",
+        "endpoint": "/api/getUserFavorites",
+        "description": "Get user's favorite cars",
+        "request": {
+          "body": {
+            "user_id": "integer (required)"
+          }
+        },
+        "response": {
+          "favorites": [
+            {
+              "id": "integer",
+              "car": {
+                "id": "integer",
+                "brand": "string",
+                "model": "string",
+                "year": "integer",
+                "price": "decimal",
+                "images": ["string"]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "report": {
+      "addReport": {
+        "method": "POST",
+        "endpoint": "/api/addReport",
+        "description": "Add a report for a car",
+        "request": {
+          "body": {
+            "car_id": "integer (required)",
+            "user_id": "integer (required)",
+            "reason": "string (required)",
+            "description": "string"
+          }
+        },
+        "response": {
+          "success": true,
+          "report": {
+            "id": "integer",
+            "car_id": "integer",
+            "user_id": "integer",
+            "reason": "string",
+            "description": "string",
+            "status": "string"
+          }
+        }
+      },
+      "getCarReports": {
+        "method": "POST",
+        "endpoint": "/api/getCarReports",
+        "description": "Get reports for a specific car",
+        "request": {
+          "body": {
+            "car_id": "integer (required)"
+          }
+        },
+        "response": {
+          "reports": [
+            {
+              "id": "integer",
+              "user": {
+                "id": "integer",
+                "name": "string"
+              },
+              "reason": "string",
+              "description": "string",
+              "status": "string",
+              "created_at": "datetime"
+            }
+          ]
+        }
+      }
+    },
+    "statistics": {
+      "getStatistics": {
+        "method": "POST",
+        "endpoint": "/api/statistics",
+        "description": "Get system statistics",
+        "request": {
+          "body": {
+            "start_date": "date",
+            "end_date": "date"
+          }
+        },
+        "response": {
+          "statistics": {
+            "total_users": "integer",
+            "total_cars": "integer",
+            "total_orders": "integer",
+            "total_revenue": "decimal",
+            "active_reservations": "integer",
+            "popular_cars": [
+              {
+                "car_id": "integer",
+                "brand": "string",
+                "model": "string",
+                "reservation_count": "integer"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+} 

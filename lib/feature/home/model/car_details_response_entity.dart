@@ -54,7 +54,7 @@ class CarDetailsResponseEntity {
             json['comments'].map((x) => Comments.fromJson(x)));
     _car = json['car'] != null ? Car.fromJson(json['car']) : null;
     _rate = json['rate']?.toString();
-    _views = json['views'].toString();
+    _views = json['viewCount'].toString();
     _likes = json['likes'].toString();
     _rent = json['rent'];
     _gear = json['gear'] != null ? Gear.fromJson(json['gear']) : null;

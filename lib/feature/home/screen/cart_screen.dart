@@ -105,6 +105,8 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.args.image);
+    print("sssss");
     return Scaffold(
       appBar: MainAppBar(title: ""),
       body: SingleChildScrollView(
@@ -127,6 +129,7 @@ class _CartScreenState extends State<CartScreen> {
                       height: AppHeightManager.h10,
                       width: AppHeightManager.h10,
                       imagePath: AppImageManager.placeholder,
+                      imageUrl: widget.args.image?.isNotEmpty ==true?widget.args.image?.first.imageUrl??AppImageManager.placeholder:AppImageManager.placeholder,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -212,19 +215,7 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                       ],
                     ),
-                    IconButton(
-                        onPressed: () {
-                          AppSharedPreferences.clear();
-
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                            RouteNamedScreens.login,
-                                (route) => false,
-                          );
-                        },
-                        icon: Icon(
-                          Icons.exit_to_app,
-                          color: Colors.white,
-                        ))
+                    
                   ],
                 ),
               ),
@@ -318,9 +309,9 @@ class _CartScreenState extends State<CartScreen> {
                   makeOrder(
                       paymentType: selectedType.toString(),
                       carId: (widget.args.carId?.id).toString(),
-                      date: "",
-                      lat: "0",
-                      long: "0");
+                      date: DateTime.now().toString(),
+                      lat: "33.22",
+                      long: "33.22");
                 },
                 color: AppColorManager.background,
                 child: AppTextWidget(
@@ -342,7 +333,7 @@ class _CartScreenState extends State<CartScreen> {
   }
 }class CartArgs{
   Car? carId;
-
-  CartArgs({required this.carId});
+  List<Images> ? image;
+  CartArgs({required this.carId,this.image});
 }
 
